@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<style>
+	body {
+		text-align: center;
+	}
+		button {
+			width: 200px;
+			height:35px;
+			margin: 20px auto;
+		}
+	</style>
+</head>
+<body>
+	<p><button id='pay'>pay button</button><p>
+	<p><button id='test'>pay button</button><p>
+</body>
+<script>
+	var obj = document.getElementById('pay');
+	obj.onclick = function(){
+
+		window.location.href = 'buy://lexue?productID=34248&productPrice=2&payType=1&coupon_id=';
+	}
+
+	var test = document.getElementById('test');
+	test.onclick = function(){
+
+		window.location.href = 'lexuegaokao://myStory/http:||www.lexue.com|store|my?token=11111';
+	}
+</script>
+</html>
