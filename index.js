@@ -14,7 +14,8 @@ router(app);
 app.use(express.static(path.join(__dirname, 'public')));
 
 // 监听端口，启动程序
-app.listen(config.port, function () {
+app.listen(config.port, function (err) {
+
 	console.log(`${pkg.name} start success! listening on port ${config.port}`);
 });
 
