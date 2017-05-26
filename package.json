@@ -12,9 +12,10 @@
   "author": "zhen",
   "license": "MIT",
   "dependencies": {
+    "colors": "1.1.2",
     "config-lite": "2.0.0",
     "express": "4.15.3",
     "http-proxy": "1.16.2",
-    "colors": "1.1.2"
+    "node-mitmproxy": "3.1.0"
   }
 }
