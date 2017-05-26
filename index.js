@@ -3,30 +3,15 @@ var express = require('express');
 var config = require('./config/default.js');
 var pkg = require('./package');
 var path = require('path');
-var router = require('./router');
-var httpProxy = require('http-proxy');
-var util = require('util');
-var colors = require('colors');
-var cerDir = path.join(__dirname, 'config', 'cer');
 var fs = require('fs');
 var https = require('https');
-var http = require('http');
 var mitmproxy = require('node-mitmproxy');
+var router = require('./router');
 
 var app = express();
 
 // 设置静态文件目录
-app.use(express.static(path.join(__dirname, 'public')));
-
-//启动代理服务器
-var targetHost = config.schema + config.host + ':' + config.port;
-console.log(targetHost);
-
-var httpsOption = {
-    cert: fs.readFileSync(path.join(cerDir, 'client-cert.pem'), 'utf8'),
-    key: fs.readFileSync(path.join(cerDir, 'client-key.pem'), 'utf8')
-}
-
+app.use('static',express.static(path.join(__dirname, 'public')));
 
 // 监听端口，启动程序
 app.listen(config.port, function (err) {

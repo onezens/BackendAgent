@@ -6,6 +6,5 @@ module.exports = {
         'apidev.lexue.com',
         'api.lexue.com'
     ],
-    schema: 'http://',
     agentPort: 8888
 };

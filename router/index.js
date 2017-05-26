@@ -17,7 +17,7 @@ function requstTest() {
 
 
 function router(req, res, isHttps, next) {
-    if (req.method == 'get'){
+    if (req.method == 'GET'){
         var netSpider = isHttps ? https : http;
         var agentReqUrl = '';
         if (isHttps){
