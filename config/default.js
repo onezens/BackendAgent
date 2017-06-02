@@ -4,7 +4,9 @@ module.exports = {
     agentHosts: [
         'api.dev.lexue.com',
         'apidev.lexue.com',
-        'api.lexue.com'
+        'api.lexue.com',
+        'zkapidev.lexue.com',
+        'zkapi.lexue.com'
     ],
     agentPort: 8888
 };
