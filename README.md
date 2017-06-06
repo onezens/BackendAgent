@@ -22,7 +22,7 @@ module.exports = {
 ```
 
 ###使用的模块
-* node-mitmproxy
+* [node-mitmproxy](https://github.com/wuchangming/node-mitmproxy)
 
 ```
 var agentHosts = config.agentHosts;
