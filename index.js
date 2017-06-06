@@ -32,11 +32,21 @@ var startProxy = function(){
         sslConnectInterceptor: function(req, cltSocket, head) { //判断该connnect请求是否需要代理
             var hostName = req.headers.host;
             var isAgent = agentHosts.indexOf(hostName) !== -1;
+            if(!isAgent){
+                console.log('No proxy ---> ' + hostName);
+            }
             return isAgent;
         },
         requestInterceptor: function (rOptions, req, res, ssl, next){ //拦截客户端请求/响应
-            var hostName = rOptions.hostname;
-            router(req, res , ssl, next);
+            var hostName = req.headers.host;
+            var isAgent = agentHosts.indexOf(hostName) !== -1;
+            if(isAgent){
+                router(req, res , ssl, next);
+            }else{
+                console.log('No proxy ----> ' + hostName);
+                next();
+            }
+
         },
         responseInterceptor: function(req, res, proxyReq, proxyRes, ssl, next)  { //拦截服务端请求/响应
             next();

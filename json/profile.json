@@ -1,0 +1,127 @@
+{
+  "userInfo": {
+    "id": 6013108763,
+    "idstr": "6013108763",
+    "screen_name": "proxyName",
+    "name": "proxyName",
+    "province": "11",
+    "city": "1000",
+    "description": "",
+    "url": "",
+    "profile_image_url": "https://tva1.sinaimg.cn/crop.0.9.641.641.50/006yWohdjw8f8ksarkqgdj30ht0ibmxa.jpg",
+    "domain": "",
+    "weihao": "",
+    "gender": "m",
+    "followers_count": 2,
+    "friends_count": 3,
+    "statuses_count": 68,
+    "favourites_count": 0,
+    "created_at": "Fri Aug 26 17:53:19 +0800 2016",
+    "following": false,
+    "verified": false,
+    "verified_type": -1,
+    "remark": "",
+    "insecurity": {
+      "sexual_content": false
+    },
+    "status_id": 4108067450214872,
+    "ptype": 0,
+    "avatar_large": "https://tva1.sinaimg.cn/crop.0.9.641.641.180/006yWohdjw8f8ksarkqgdj30ht0ibmxa.jpg",
+    "avatar_hd": "https://tva1.sinaimg.cn/crop.0.9.641.641.1024/006yWohdjw8f8ksarkqgdj30ht0ibmxa.jpg",
+    "verified_reason": "",
+    "follow_me": false,
+    "lang": "zh-cn",
+    "star": 0,
+    "mbtype": 0,
+    "mbrank": 0,
+    "level": 1,
+    "type": 1,
+    "badge": {
+      "uc_domain": 0,
+      "enterprise": 0,
+      "anniversary": 0,
+      "taobao": 0,
+      "gongyi": 0,
+      "gongyi_level": 0,
+      "bind_taobao": 0,
+      "dailv": 0,
+      "zongyiji": 0,
+      "vip_activity1": 0,
+      "unread_pool": 1,
+      "daiyan": 0,
+      "ali_1688": 0,
+      "vip_activity2": 0,
+      "fools_day_2016": 0,
+      "uefa_euro_2016": 0,
+      "unread_pool_ext": 1,
+      "self_media": 0,
+      "olympic_2016": 0,
+      "dzwbqlx_2016": 0,
+      "discount_2016": 0,
+      "follow_whitelist_video": 0,
+      "league_badge": 0,
+      "suishoupai_2017": 0,
+      "lol_msi_2017": 0,
+      "super_star_2017": 0
+    },
+    "extend": {
+      "privacy": {
+        "mobile": 1
+      },
+      "mbprivilege": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "credit_score": 80,
+    "urank": 4,
+    "avatar_extend_info": {
+      "pendant_url": "",
+      "pendant_scheme": "http://new.vip.weibo.cn/headportrait/mall?sinainternalbrowser=topnav&toolbar_hidden=1",
+      "pendant_title": "设置头像挂件"
+    },
+    "pic_bg": "",
+    "cover_image_phone": "https://ww1.sinaimg.cn/bmiddle/6ce2240djw1e9ob3xerqoj20hs0hsjur.jpg",
+    "cover_image_phone_level": 0,
+    "allow_msg": 1
+  },
+  "fans_scheme": "sinaweibo://cardlist?containerid=231016",
+  "follow_scheme": "sinaweibo://cardlist?containerid=231093_-_selfrecomm",
+  "tabsInfo": {
+    "selectedTab": 1,
+    "tabs": [
+      {
+        "title": "主页",
+        "tab_type": "profile",
+        "containerid": "2302836013108763"
+      },
+      {
+        "title": "微博",
+        "tab_type": "weibo",
+        "containerid": "1076036013108763",
+        "filter_group_info": {
+          "title": "全部微博（68）",
+          "icon": "http://u1.sinaimg.cn/upload/2014/06/11/userinfo_icon_screening.png",
+          "icon_name": "筛选",
+          "icon_scheme": ""
+        },
+        "filter_group": [
+          {
+            "name": "全部微博",
+            "containerid": "1076036013108763_-_WEIBO_SECOND_PROFILE_WEIBO",
+            "scheme": "",
+            "title": "全部微博(68)"
+          },
+          {
+            "name": "原创微博",
+            "containerid": "1076036013108763_-_WEIBO_SECOND_PROFILE_WEIBO_ORI",
+            "scheme": "",
+            "title": "原创微博"
+          }
+        ]
+      },
+      {
+        "title": "相册",
+        "tab_type": "album",
+        "containerid": "1078036013108763"
+      }
+    ]
+  }
+}
