@@ -23,18 +23,14 @@ function router(req, res, isHttps, next) {
         }
         var indexOfPara = agentReqUrl.indexOf('?');
         var routerStr = agentReqUrl.substring(agentReqUrl.indexOf(host) + host.length + 1, indexOfPara);
-        if (routerStr.length > 0){
-            switch (routerStr){
-                case '2/profile':
-                    getProfile(res, agentReqUrl);
-                    break;
-                default:
-                    fetchData(netSpider, agentReqUrl, res);
-                    break;
-            }
 
-        }else{
-            fetchData(netSpider, agentReqUrl, res);
+        switch (routerStr){
+            case '2/profile':
+                getProfile(res, agentReqUrl);
+                break;
+            default:
+                getData(req, res, next);
+                break;
         }
 
     }else if (req.method == 'POST'){
@@ -49,51 +45,26 @@ function router(req, res, isHttps, next) {
     }
 }
 
-function fetchData(netSpider,agentReqUrl,res) {
-    try{
-        netSpider.get(agentReqUrl,function (res2) {
-            var data = '';
-            res2.on('data', function (trunk) {
-                data += trunk;
-            });
-            res2.on('end', function () {
-                logData(agentReqUrl, data);
-
-                res.writeHead(200, 'success',{
-                    'content-type': 'text/plain;charset=UTF-8'
-                });
-                res.write(data, 'utf8');
-                res.end();
-            })
-        });
-    }catch (err){
-        res.statusCode = 500;
-        res.end(err.toString());
-        console.log('Get Data Error: ' + agentReqUrl);
-    }
-}
 
 
-function postData(reqOri, resOri, fields, next) {
+function getData(reqOri, resOri, next) {
+
     var headers = reqOri.headers;
-    var host = headers.host;
     var urlObj = url.parse(reqOri.url);
-    var path = urlObj.path;
     var defaultPort = reqOri.url.indexOf('http')!=-1 ? 80: 443;
     var port = urlObj.port ? urlObj.port : defaultPort;
-    var postData=querystring.stringify(fields);
+
     var options={
-        hostname:host,
+        hostname:urlObj.host,
         port:port,
-        path:path,
-        method:"POST",
-        headers:headers
+        path: urlObj.path,
+        headers:headers,
+        query: reqOri.query
     }
 
     var req=http.request(options,function(res){
 
-
-        if(res.headers['content-encoding'].indexOf('gzip') != -1){
+        if(res.headers['content-encoding'] && res.headers['content-encoding'].indexOf('gzip') != -1){
             var resDataGzip = [];
             res.on("data",function(chunk){
                 resDataGzip.push(chunk);
@@ -117,9 +88,58 @@ function postData(reqOri, resOri, fields, next) {
             });
         }
 
+    });
+
+    req.on("error",function(err){
+        console.log(err.message);
+        next();
+    })
+    req.write('');
+    req.end();
+}
 
 
+function postData(reqOri, resOri, fields, next) {
+    var headers = reqOri.headers;
+    var host = headers.host;
+    var urlObj = url.parse(reqOri.url);
+    var path = urlObj.path;
+    var defaultPort = reqOri.url.indexOf('http')!=-1 ? 80: 443;
+    var port = urlObj.port ? urlObj.port : defaultPort;
+    var postData=querystring.stringify(fields);
+    var options={
+        hostname:host,
+        port:port,
+        path:path,
+        method:"POST",
+        headers:headers
+    }
 
+    var req=http.request(options,function(res){
+
+        if(res.headers['content-encoding'] && res.headers['content-encoding'].indexOf('gzip') != -1){
+            var resDataGzip = [];
+            res.on("data",function(chunk){
+                resDataGzip.push(chunk);
+            });
+            res.on("end",function(){
+                var buffer = Buffer.concat(resDataGzip);
+                zlib.gunzip(buffer, function(err, decoded) {
+                    resEnd(resOri, decoded.toString(), res.headers);
+                })
+            });
+
+        }else{
+            var resData = '';
+            res.on("data",function(chunk){
+                resData += chunk;
+            });
+            res.on("end",function(){
+
+                resEnd(resOri, resData, res.headers);
+
+            });
+        }
 
     });
 
@@ -152,6 +172,27 @@ function getProfile(res, url) {
 
 function logData(url, data) {
     console.log('\n' + url.green + '\n' + data.cyan + '\n');
+}
+
+function fetchData(res, req, netSpider,agentReqUrl) {
+    try{
+        netSpider.get(agentReqUrl,function (res2) {
+            var data = '';
+            res2.on('data', function (trunk) {
+                data += trunk;
+            });
+            res2.on('end', function () {
+                logData(agentReqUrl, data);
+                res.writeHead(200, 'success',req.headers);
+                res.write(data, 'utf8');
+                res.end();
+            })
+        });
+    }catch (err){
+        res.statusCode = 500;
+        res.end(err.toString());
+        console.log('Get Data Error: ' + agentReqUrl);
+    }
 }
 
 module.exports = router;

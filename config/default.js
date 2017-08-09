@@ -3,9 +3,9 @@ module.exports = {
     host: '127.0.0.1',
     agentHosts: [
         'api.weibo.cn',
-        'api.baidu.com',
-        'www.hoapi.com',
-        'www.hoapi.com:6000'
+        'api.onezen.cc:443',
+        'api.onezen.cc'
     ],
     agentPort: 8888
 };
+
