@@ -13,7 +13,7 @@ var profileData = require('../json/profile.json');
 
 function router(req, res, isHttps, next) {
     if (req.method == 'GET'){
-        var netSpider = isHttps ? https : http;
+
         var host = req.headers.host;
         var agentReqUrl = '';
         if (isHttps){
@@ -50,19 +50,21 @@ function router(req, res, isHttps, next) {
 function getData(reqOri, resOri, next) {
 
     var headers = reqOri.headers;
+    var host = reqOri.headers.host;
     var urlObj = url.parse(reqOri.url);
+    //https reqOri.url 只是path和query的值
     var defaultPort = reqOri.url.indexOf('http')!=-1 ? 80: 443;
     var port = urlObj.port ? urlObj.port : defaultPort;
+    var netSpider = defaultPort == 443 ? https : http;
 
     var options={
-        hostname:urlObj.host,
-        port:port,
+        hostname: host,
+        port: port,
         path: urlObj.path,
-        headers:headers,
-        query: reqOri.query
+        headers: headers,
     }
 
-    var req=http.request(options,function(res){
+    var req=netSpider.request(options,function(res){
 
         if(res.headers['content-encoding'] && res.headers['content-encoding'].indexOf('gzip') != -1){
             var resDataGzip = [];
@@ -107,6 +109,8 @@ function postData(reqOri, resOri, fields, next) {
     var defaultPort = reqOri.url.indexOf('http')!=-1 ? 80: 443;
     var port = urlObj.port ? urlObj.port : defaultPort;
     var postData=querystring.stringify(fields);
+    var netSpider = defaultPort == 443 ? https : http;
+
     var options={
         hostname:host,
         port:port,
@@ -115,7 +119,7 @@ function postData(reqOri, resOri, fields, next) {
         headers:headers
     }
 
-    var req=http.request(options,function(res){
+    var req=netSpider.request(options,function(res){
 
         if(res.headers['content-encoding'] && res.headers['content-encoding'].indexOf('gzip') != -1){
             var resDataGzip = [];

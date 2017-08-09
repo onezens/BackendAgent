@@ -34,6 +34,8 @@ var startProxy = function(){
             var isAgent = agentHosts.indexOf(hostName) !== -1;
             if(!isAgent){
                 console.log('No proxy ---> ' + hostName);
+            }else{
+                console.log('Proxy ---> ' + hostName);
             }
             return isAgent;
         },
