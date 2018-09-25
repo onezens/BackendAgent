@@ -4,7 +4,8 @@
   "description": "BackendAgent",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "start": "DEBUG=BA* node server"
   },
   "keywords": [
     "BackendAgent"
@@ -13,9 +14,12 @@
   "license": "MIT",
   "dependencies": {
     "colors": "1.1.2",
+    "debug": "^4.0.1",
     "express": "4.15.3",
     "formidable": "^1.1.1",
+    "http-proxy": "^1.17.0",
     "node-mitmproxy": "3.1.0",
-    "querystring": "^0.2.0"
+    "querystring": "^0.2.0",
+    "request": "^2.88.0"
   }
 }

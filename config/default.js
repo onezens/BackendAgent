@@ -1,11 +1,10 @@
 module.exports = {
-    port: 8080,
+    port: 8066,
     host: '127.0.0.1',
     agentHosts: [
-        'api.weibo.cn',
-        'api.onezen.cc:443',
+        'daily.ui.bst.meitu.com',
         'api.onezen.cc'
     ],
-    agentPort: 8888
+    agentPort: 8067
 };
 

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="PROJECT" libraries="{node}" />
+    <file url="file://$PROJECT_DIR$" libraries="{BackendAgent/node_modules}" />
+    <file url="PROJECT" libraries="{@types/node, BackendAgent/node_modules, node}" />
     <includedPredefinedLibrary name="Node.js Core" />
   </component>
 </project>

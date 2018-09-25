@@ -7,35 +7,42 @@ var fs = require('fs');
 var https = require('https');
 var mitmproxy = require('node-mitmproxy');
 var router = require('./router');
+var httpProxy = require('http-proxy');
+var http = require('http');
+var debugLog = require('debug')('BA:index');
 
-var app = express();
 
-// 设置静态文件目录
-app.use('static',express.static(path.join(__dirname, 'public')));
+var proxy = httpProxy.createProxyServer();
 
-// 监听端口，启动程序
-app.listen(config.port, function (err) {
-    if (err){
-       console.log(err);
-    }else{
-        console.log(`${pkg.name} start success! listening on port ${config.port}`);
-        startProxy();
-    }
+var reqNum  = 0; // 缓存目前请求的数量
 
+proxy.on('proxyReq',function () {
+    reqNum ++;
+    console.log("发起一个请求,当前的剩余的请求数量是 " + reqNum);
 });
 
+
+proxy.on('proxyRes',function () {
+    reqNum --;
+    console.log("完成一个请求,当前的剩余的请求数量是 " + reqNum);
+});
+
+
+// 监听端口，启动程序
 var agentHosts = config.agentHosts;
 
 var startProxy = function(){
     mitmproxy.createProxy({
         port: config.agentPort,
         sslConnectInterceptor: function(req, cltSocket, head) { //判断该connnect请求是否需要代理
+            return true;
             var hostName = req.headers.host;
+            console.log(req.headers);
             var isAgent = agentHosts.indexOf(hostName) !== -1;
             if(!isAgent){
-                console.log('No proxy ---> ' + hostName);
+                debugLog('No proxy1 ---> ' + hostName);
             }else{
-                console.log('Proxy ---> ' + hostName);
+                debugLog('Proxy ---> ' + hostName);
             }
             return isAgent;
         },
@@ -43,21 +50,30 @@ var startProxy = function(){
             var hostName = req.headers.host;
             var isAgent = agentHosts.indexOf(hostName) !== -1;
             if(isAgent){
-                router(req, res , ssl, next);
+                proxy.web(req,res, {
+                    target: 'http://localhost:8888'
+                }, function (e) {
+                    console.log("proxy error call back ");
+                    console.log(e);
+                });
             }else{
-                console.log('No proxy ----> ' + hostName);
+                debugLog('No proxy2 ----> ' + hostName);
                 next();
             }
 
         },
         responseInterceptor: function(req, res, proxyReq, proxyRes, ssl, next)  { //拦截服务端请求/响应
             next();
-        }
+        },
+        getCertSocketTimeout: 3 * 1000
     });
+};
+
+try {
+    startProxy();
+}catch (e) {
+    debugLog(e);
 }
-
-
-
 
 
 
